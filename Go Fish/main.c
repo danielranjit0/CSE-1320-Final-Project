@@ -5,6 +5,7 @@
 
 int main(void) {
     playerFunction();
+    interactionFunction();
     
     return 0;
 }
