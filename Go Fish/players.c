@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<time.h>
 
-int main()
+void runPlayers(void)
 {
   //The types of cards and the the amount
   int diamonds[13] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
@@ -90,5 +90,4 @@ int main()
       }
     }
   }
-  return 0;
 }
