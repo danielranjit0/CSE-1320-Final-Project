@@ -4,6 +4,8 @@
 #include<stdlib.h>
 #include<time.h>
 
+#include"players.h"
+
 void runPlayers(void)
 {
   //The types of cards and the the amount
