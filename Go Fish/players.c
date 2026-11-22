@@ -1,3 +1,5 @@
+//Determine the number of players and distrabution of cards to said players
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
