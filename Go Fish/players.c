@@ -48,7 +48,7 @@ int main()
         int house = rand() % 4;
         int index;
 
-        switch(house)
+        switch(house) //determine whats distrabuted
         {
           case 0:
             if(dNum > 0)
