@@ -31,10 +31,10 @@ void transferCards(Player *from, Player *to, int rank)//transfer all cards of a 
     {
       if(from -> hand[i].rank == rank)
       {
-        to->hand[to -> handCount] = from -> hand[1];
+        to->hand[to -> handCount] = from -> hand[i];
         to -> handCount++;
 
-        removeCard(from, 1);
+        removeCard(from, i);
       }
       else
         i++;
