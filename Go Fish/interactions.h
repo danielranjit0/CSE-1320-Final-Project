@@ -3,7 +3,7 @@
 
 #include "game.h"
 
-void interaction(Game *game);
+void interactionFunction(Game *game);
 void displayStats(Game *game);
 
 #endif
