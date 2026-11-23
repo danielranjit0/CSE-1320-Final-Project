@@ -7,7 +7,10 @@ int main(void)
 {
     Game game = {0};
     
-    playerFunction(&game);
+    if (playerFunction(&game)!= 0)//exit the program incase of an invalid input
+    {
+        return 1;
+    }
     interactionFunction(&game);
     displayStats(&game);
     
