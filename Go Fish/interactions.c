@@ -100,7 +100,7 @@ int gameOver(Game *game)//determine if the game has ended
   return 1;
 }
 
-void interaction(Game *game)//how they interact
+void interactionFunction(Game *game)//how they interact
 {
   while(!gameOver(game))
     {
