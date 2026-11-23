@@ -1,6 +1,8 @@
 #ifndef INTERACTIONS_H
 #define INTERACTIONS_H
 
-void interactionFunction(void);
+#include "game.h"
+
+void interaction(Game *game);
 
 #endif
