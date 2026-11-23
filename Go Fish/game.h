@@ -3,11 +3,12 @@
 #ifndef GAME_H
 #define GAME_H
 
+//defines the limitations of the different values
 #define MAX_PLAYERS 6
 #define MAX_CARDS 52
 #define MAX_RANK 13
 
-typedef struct
+typedef struct//defines properties of Card
 {
     int rank;
     char suit;
@@ -26,7 +27,7 @@ typedef struct
     int currentStreak;
     int bestStreak;
 
-} Player;
+} Player;//defines properties of player
 
 typedef struct
 {
@@ -38,6 +39,6 @@ typedef struct
     int playerCount;
     int currentPlayer;
 
-} Game;
+} Game;//defines the properties of game interactions
 
 #endif
