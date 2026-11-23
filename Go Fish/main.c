@@ -4,8 +4,9 @@
 #include "interactions.h"
 
 int main(void) {
-    playerFunction();
-    interactionFunction();
+    playerFunction(&game);
+    interactionFunction(&game);
+    displayStats(&game);
     
     return 0;
 }
