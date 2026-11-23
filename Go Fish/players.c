@@ -1,97 +1,82 @@
-//Determine the number of players and distrabution of cards to said players
+// Determine the number of players and distribution of cards to said players
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-#include"players.h"
+#include "players.h"
 
 int playerFunction(Game *game)
 {
-  //The types of cards and the the amount
-  int diamonds[13] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
-  int hearts[13] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
-  int spades[13] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
-  int clubs[13] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+    int players, cards;
 
-  int dNum = 13, hNum = 13, sNum = 13, cNum = 13; //Keeps track of the amount of numbers in each house
+    srand(time(NULL)); // Random number generator
 
-  int players, cards;
-  
-  srand(time(NULL)); //random num generator
-  
-  printf("Howmany players (2-6): \n");
-  scanf("%d", &players);
+    printf("How many players (2-6): \n");
+    scanf("%d", &players);
 
-  //How many cards everyone gets
-  if(players >= 2 && players <= 3)//more then 2 and less then 3 players get 7 cards each
-  {
-    cards = 7;
-  }
-  else if(players > 3 && players<= 6)//4 or more players get 5 cards each
-  {
-    cards = 5;
-  }
-  else//invalid answers
-  {
-    printf("This is an invalid number please pick a number between (2-6)!\n");
-    return 1;
-  }
-
-  //Dealing Cards
-  for(int p = 1; p <= players; p++)
-  {
-    printf("Players %d's Hand\n", p);
-
-    for(int c = 0; c < cards; c++)
+    // How many cards everyone gets
+    if (players >= 2 && players <= 3)
     {
-      int  dealt = 0;
-
-      while (!dealt)
-      {
-        int house = rand() % 4;
-        int index;
-
-        switch(house) //determine whats distrabuted
-        {
-          case 0:
-            if(dNum > 0)
-            {
-              index = rand() % dNum;
-              printf("%dD ", diamonds[index]);
-              diamonds[index] = diamonds[dNum - 1];
-              dNum--;
-              dealt = 1;
-            }break;
-          case 1:
-            if(hNum > 0)
-            {
-              index = rand() % hNum;
-              printf("%dD ", hearts[index]);
-              hearts[index] = hearts[hNum - 1];
-              hNum--;
-              dealt = 1;
-            }break;
-          case 2:
-            if(sNum > 0)
-            {
-              index = rand() % sNum;
-              printf("%dD ", spades[index]);
-              spades[index] = spades[sNum - 1];
-              sNum--;
-              dealt = 1;
-            }break;
-          case 3:
-            if(cNum > 0)
-            {
-              index = rand() % cNum;
-              printf("%dD ", clubs[index]);
-              clubs[index] = clubs[cNum - 1];
-              cNum--;
-              dealt = 1;
-            }break;
-        }
-      }
+        cards = 7;
     }
-  }
+    else if (players > 3 && players <= 6)
+    {
+        cards = 5;
+    }
+    else
+    {
+        printf("This is an invalid number please pick a number between (2-6)!\n");
+        return 1;
+    }
+
+    // 1. Save player count and reset deck/player states in the Game struct
+    game->playerCount = players;
+    game->currentPlayer = 0;
+    game->deckCount = 0;
+
+    // 2. Build the 52-card deck inside game->deck
+    char suits[4] = {'D', 'H', 'S', 'C'};
+    for (int s = 0; s < 4; s++)
+    {
+        for (int r = 1; r <= 13; r++)
+        {
+            game->deck[game->deckCount].rank = r;
+            game->deck[game->deckCount].suit = suits[s];
+            game->deckCount++;
+        }
+    }
+
+    // 3. Shuffle the deck (Fisher-Yates shuffle)
+    for (int i = game->deckCount - 1; i > 0; i--)
+    {
+        int j = rand() % (i + 1);
+        Card temp = game->deck[i];
+        game->deck[i] = game->deck[j];
+        game->deck[j] = temp;
+    }
+
+    // 4. Deal cards from game->deck into each player's hand
+    for (int p = 0; p < players; p++)
+    {
+        game->players[p].handCount = 0;
+        game->players[p].books = 0;
+
+        printf("Player %d's Hand: ", p + 1);
+
+        for (int c = 0; c < cards; c++)
+        {
+            // Take the top card from game->deck and put it in the player's hand
+            Card dealtCard = game->deck[game->deckCount - 1];
+            game->deckCount--;
+
+            game->players[p].hand[game->players[p].handCount] = dealtCard;
+            game->players[p].handCount++;
+
+            printf("%d%c ", dealtCard.rank, dealtCard.suit);
+        }
+        printf("\n");
+    }
+
+    return 0;
 }
