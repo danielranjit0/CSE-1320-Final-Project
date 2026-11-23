@@ -1,36 +1,43 @@
+//Allow everyting to access game information
 
 #ifndef GAME_H
 #define GAME_H
 
 #define MAX_PLAYERS 6
 #define MAX_CARDS 52
-#define HAND_SIZE 52
+#define MAX_RANK 13
 
 typedef struct
 {
-  int rank;
-  char suit;
-}card;
+    int rank;
+    char suit;
+} Card;
 
 typedef struct
 {
-  int id;
-  
-  card hand[HAND_SIZE];
-  int handCount;
-  int books;
+    Card hand[MAX_CARDS];
+    int handCount;
 
-  int wins;
-  int losses;
-  int currentStreak;
-  int bestStreak;
-}player;
+    int books;
 
-void initializeDeck(card deck[]);
-void shuffleDeck(card deck[]);
-void dealCards(player players[], int playerCount, card deck[], int *deckCount);
+    int wins;
+    int losses;
 
-void interaction(player players[], int playerCount, card desk[], int *deckCount);
-void displayStats(player players[], int playerCount);
+    int currentStreak;
+    int bestStreak;
+
+} Player;
+
+typedef struct
+{
+    Player players[MAX_PLAYERS];
+
+    Card deck[MAX_CARDS];
+    int deckCount;
+
+    int playerCount;
+    int currentPlayer;
+
+} Game;
 
 #endif
