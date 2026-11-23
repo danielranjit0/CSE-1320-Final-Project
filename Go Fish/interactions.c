@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#inlcude "interactions.h"
+#include "interactions.h"
 
 int hasCard(Player *player, int rank) //checking for the value of the cards
 {
@@ -50,7 +50,7 @@ void checkBook(Player *player)//checks if someone has 4 cards of the same value
       for(int i = 0; i < player -> handCount; i++)
       {
         if(player -> hand[i].rank == rank)
-          count++
+          count++;
       }
       if(count == 4)
       {
@@ -63,7 +63,7 @@ void checkBook(Player *player)//checks if someone has 4 cards of the same value
             else
               i++;
           }
-        player -> books++
+        player -> books++;
       }
     }
 }
@@ -122,7 +122,7 @@ void interaction(Game *game)//how they interact
         }
       }
 
-      printf(""Your cards: );
+      printf("Your cards: ");
 
       for(int i = 0; i < player -> handCount; i++)
         {
@@ -134,7 +134,7 @@ void interaction(Game *game)//how they interact
       int target;
       int rank;
 
-      printf("Choose a player to ask (1-&d): ", game -> playerCount);
+      printf("Choose a player to ask (1-%d): ", game -> playerCount);
 
       scanf("%d", &target);
 
@@ -194,7 +194,7 @@ void interaction(Game *game)//how they interact
         
         game->currentPlayer = (game->currentPlayer + 1) % game->playerCount; //next player
     }
-
+}
 
 void displayStats(Game *game) //keeps track of win, loss, and streeks
 {
