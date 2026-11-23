@@ -167,7 +167,7 @@ void interactionFunction(Game *game)//how they interact
 
             transferCards(opponent, player, rank);
 
-            checkBooks(player);
+            checkBook(player);
 
             printf("Player %d gets another turn!\n",
                 current + 1);
@@ -180,7 +180,7 @@ void interactionFunction(Game *game)//how they interact
 
             drawCard(game, player);
 
-            checkBooks(player);
+            checkBook(player);
 
             //if drawn card matches cards on hand they will get another turn
             if (player->handCount > 0 && player->hand[player->handCount - 1].rank == rank)
