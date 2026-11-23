@@ -3,6 +3,7 @@
 
 #include "game.h"
 
+void checkBook(Player *player);
 void interactionFunction(Game *game);
 void displayStats(Game *game);
 
