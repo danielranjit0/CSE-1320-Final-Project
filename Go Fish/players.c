@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "players.h"
+#include "interactions.h"
 
 int playerFunction(Game *game)
 {
@@ -76,6 +77,8 @@ int playerFunction(Game *game)
             printf("%d%c ", dealtCard.rank, dealtCard.suit);
         }
         printf("\n");
+
+        checkBook(&game -> players[p]);
     }
 
     return 0;
