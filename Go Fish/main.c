@@ -3,7 +3,10 @@
 #include "players.h"
 #include "interactions.h"
 
-int main(void) {
+int main(void) 
+{
+    Game game = {0};
+    
     playerFunction(&game);
     interactionFunction(&game);
     displayStats(&game);
