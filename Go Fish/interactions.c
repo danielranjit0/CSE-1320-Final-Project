@@ -5,7 +5,7 @@
 
 #inlcude "interactions.h"
 
-int hasCard(Player *player, int rank)
+int hasCard(Player *player, int rank) //checking for the value of the cards
 {
   for(int i = 0; i < player->handCount; i++)
     {
@@ -15,7 +15,7 @@ int hasCard(Player *player, int rank)
   return 0;
 }
 
-void removeCard(Player *player, int index)
+void removeCard(Player *player, int index) //remove taken cards
 {
   for(int i = index; i < player -> handCount - 1; i++)
     {
@@ -25,7 +25,7 @@ void removeCard(Player *player, int index)
   player->handCount--;
 }
 
-void transferCards(Player *from, Player *to, int rank)
+void transferCards(Player *from, Player *to, int rank)//transfer all cards of a particular number
 {
   for(int i = 0; i < from-> handCount;)
     {
@@ -41,7 +41,7 @@ void transferCards(Player *from, Player *to, int rank)
     }
 }
 
-void checkBook(Player *player)
+void checkBook(Player *player)//checks if someone has 4 cards of the same value
 {
   for(int rank = 1; rank <= 13; rank++)
     {
@@ -56,7 +56,7 @@ void checkBook(Player *player)
       {
         printf("Player collected a book of rank %d!\n", rank);
 
-        for(int i = 0; i < player -> handCount;)
+        for(int i = 0; i < player -> handCount;)//remove cards
           {
             if(player -> hand[i].rank == rank)
               removeCard(player, i);
@@ -68,7 +68,7 @@ void checkBook(Player *player)
     }
 }
 
-void drawCard(Game *game, Player *player)
+void drawCard(Game *game, Player *player)//draws cards from deck
 {
   if(game -> deckCount <= 0)
   {
@@ -86,7 +86,7 @@ game -> deckCount--;
   printf("Player drew a card!\n");
 }
 
-int gameOver(Game *game)
+int gameOver(Game *game)//determine if the game has ended
 {
   if(game -> deckCount > 0)
     return 0;
@@ -100,7 +100,7 @@ int gameOver(Game *game)
   return 1;
 }
 
-void interaction(Game *game)
+void interaction(Game *game)//how they interact
 {
   while(!gameOver(game))
     {
@@ -113,7 +113,7 @@ void interaction(Game *game)
       {
         drawCard(game, player);
 
-        if(player -> handCount == 0)
+        if(player -> handCount == 0)//if player doesnt have cards
         {
 
           game -> currentPlayer = (game -> currentPlayer + 1) % game -> playerCount;
@@ -182,8 +182,8 @@ void interaction(Game *game)
 
             checkBooks(player);
 
-            if (player->handCount > 0 &&
-                player->hand[player->handCount - 1].rank == rank)
+            //if drawn card matches cards on hand they will get another turn
+            if (player->handCount > 0 && player->hand[player->handCount - 1].rank == rank)
             {
                 printf("You drew the requested rank! "
                        "Take another turn!\n");
@@ -191,13 +191,50 @@ void interaction(Game *game)
                 continue;
             }
         }
-
-        game->currentPlayer =
-            (game->currentPlayer + 1) %
-            game->playerCount;
+        
+        game->currentPlayer = (game->currentPlayer + 1) % game->playerCount; //next player
     }
 
-printf("Current Win Streak: %d\n",
+
+void displayStats(Game *game) //keeps track of win, loss, and streeks
+{
+    int highestBooks = 0;
+
+    // Find the highest number of the same value.
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        if (game->players[i].books > highestBooks)highestBooks = game->players[i].books;
+    }
+
+    printf("\n=== GAME RESULTS ===\n");
+
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        Player *p = &game->players[i];
+
+        if (p->books == highestBooks)
+        {
+            printf("Player %d WINS!\n", i + 1);
+
+            p->wins++;
+            p->currentStreak++;
+
+            if (p->currentStreak > p->bestStreak) p->bestStreak = p->currentStreak;
+        }
+        else
+        {
+            printf("Player %d LOSES!\n", i + 1);
+
+            p->losses++;
+            p->currentStreak = 0;
+        }
+
+        printf("\nPlayer %d Statistics:\n", i + 1);
+
+        printf("Wins: %d\n", p->wins);
+        printf("Losses: %d\n", p->losses);
+
+        printf("Current Win Streak: %d\n",
             p->currentStreak);
 
         printf("Best Win Streak: %d\n",
@@ -205,8 +242,7 @@ printf("Current Win Streak: %d\n",
 
         if (p->losses > 0)
         {
-            printf("Win/Loss Ratio: %.2f\n",
-                (double)p->wins / p->losses);
+            printf("Win/Loss Ratio: %.2f\n", (double)p->wins / p->losses);
         }
         else
         {
